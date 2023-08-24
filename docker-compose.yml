@@ -1,22 +1,32 @@
 version: '3.5'
 services:
-  server:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-      args:
-        - http_proxy
-        - https_proxy
-        - no_proxy
-    image: budget-track-app/server:latest
-    ports:
-      - '8081:8081'
+  # server:
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #     args:
+  #       - http_proxy
+  #       - https_proxy
+  #       - no_proxy
+  #   image: budget-track-app/server:latest
+    # ports:
+    #   - '8081:8081'
   mysql:
     image: mysql:8.0.28-oracle
     ports:
-      - '3306:3306'
+      - '3306:3306'    
+    restart: unless-stopped
+
     environment:
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_USER: test
-      MYSQL_PASSWORD: test
-      MYSQL_DATABASE: test
+      MYSQL_ROOT_PASSWORD: P@ssw0rd 
+      MYSQL_USER: sudo
+      MYSQL_PASSWORD: P@ssw0rd
+      MYSQL_DATABASE: budgetAppDB
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+
+
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
