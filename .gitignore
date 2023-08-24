@@ -31,6 +31,7 @@ node_modules
 .npmrc
 *.log
 
+
 # Typings
 typings/
 
@@ -55,3 +56,4 @@ test/**/*.js.map
 #env
 .env.local
 .env.development
+.env
