@@ -18,11 +18,12 @@ services:
     restart: unless-stopped
 
     environment:
-      MYSQL_ROOT_PASSWORD: P@ssw0rd 
       MYSQL_USER: sudo
       MYSQL_PASSWORD: P@ssw0rd
       MYSQL_DATABASE: budgetAppDB
       MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+    #volumes:
+      #- mysql-data:/var/lib/mysql
 
 
     networks:
