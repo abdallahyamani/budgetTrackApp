@@ -1,8 +1,8 @@
 import {registerProvider} from "@tsed/di";
 import {DataSource} from "typeorm";
 import {Logger} from "@tsed/logger";
-import { BudgetModel } from "src/models/budgetModel";
-import { TransactionModel } from "src/models/transactionModel";
+import { BudgetModel } from "../models/budgetModel";
+import { TransactionModel } from "../models/transactionModel";
 
 export const MYSQL_DATA_SOURCE = Symbol.for("MysqlDataSource");
 export const MysqlDataSource = new DataSource({

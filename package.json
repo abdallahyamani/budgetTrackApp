@@ -8,7 +8,7 @@
     "start": "npm run barrels && tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
     "typeorm": "typeorm-ts-node-commonjs",
-    "typeorm:sync": "typeorm schema:sync"
+    "typeorm-sync": "typeorm schema:sync -d ./src/datasources/MysqlDataSource.ts"
   },
   "dependencies": {
     "@tsed/ajv": "^7.34.6",
