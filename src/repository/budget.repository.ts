@@ -1,5 +1,5 @@
 import { registerProvider } from "@tsed/common";
-import { MysqlDataSource } from "src/datasources/MysqlDatasource";
+import { MysqlDataSource } from "src/datasources/MysqlDataSource";
 import { BudgetModel } from "src/models/budgetModel";
 
 const BudgetRepository = MysqlDataSource.getRepository(BudgetModel)

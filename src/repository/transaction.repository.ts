@@ -1,5 +1,5 @@
 import { TransactionModel } from 'src/models/transactionModel';
-import { MysqlDataSource } from '../datasources/MysqlDatasource';
+import { MysqlDataSource } from '../datasources/MysqlDataSource';
 import { registerProvider } from "@tsed/common";
 
     const TransactionRepository = MysqlDataSource.getRepository(TransactionModel)

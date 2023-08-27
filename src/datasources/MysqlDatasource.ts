@@ -7,12 +7,13 @@ import { TransactionModel } from "src/models/transactionModel";
 export const MYSQL_DATA_SOURCE = Symbol.for("MysqlDataSource");
 export const MysqlDataSource = new DataSource({
   type: "mysql",
+  name: "mysqlConnection", // Add this line
   entities: [BudgetModel, TransactionModel],
-  host: process.env.MYSQL_HOST,
-  port: Number(process.env.MYSQL_PORT),
-  username: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
+  host: process.env.MYSQL_HOST || "localhost",
+  port: Number(process.env.MYSQL_PORT) || 3306,
+  username: process.env.MYSQL_USER || "sudo",
+  password: process.env.MYSQL_PASSWORD || "P@ssw0rd",
+  database: process.env.MYSQL_DATABASE || "budgetAppDB",
   synchronize: true,
 
 });

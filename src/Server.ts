@@ -36,6 +36,11 @@ import * as pages from "./controllers/pages/index";
     "json-parser",
     { use: "urlencoded-parser", options: { extended: true }}
   ],
+  componentsScan: [
+    `${__dirname}/repository/**/*.ts`,
+    `${__dirname}/app-services/**/*.ts`,
+    `${__dirname}/services/**/*.ts`,
+  ],
   views: {
     root: join(process.cwd(), "../views"),
     extensions: {

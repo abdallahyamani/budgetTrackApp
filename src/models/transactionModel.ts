@@ -1,15 +1,16 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { BudgetModel } from './budgetModel';
+import { Property } from "@tsed/schema";
 
 @Entity()
-
 export class TransactionModel {
 
   @PrimaryGeneratedColumn()
+  @Property()
   id: string
 
   @ManyToOne(() => BudgetModel, (budget: BudgetModel) => budget.id)
-  @JoinColumn({ name: "budget_id"})
+  @JoinColumn({ name: "budget_id" })
   budget: BudgetModel
 
   @Column()
@@ -21,9 +22,11 @@ export class TransactionModel {
   @Column()
   description: string
 
+  @Column()
   @CreateDateColumn()
   createdAt: Date
 
+  @Column()
   @UpdateDateColumn()
   updatedAt: Date
 }

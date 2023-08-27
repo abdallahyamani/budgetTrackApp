@@ -1,10 +1,11 @@
+import { Property } from "@tsed/schema";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-
 export class BudgetModel {
 
   @PrimaryGeneratedColumn()
+  @Property()
   id: string
 
   @Column()
