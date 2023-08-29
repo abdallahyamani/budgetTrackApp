@@ -14,20 +14,25 @@ services:
   mysql:
     image: mysql:8.0.28-oracle
     ports:
-      - '3306:3306'    
+      - '3307:3306'    
     restart: unless-stopped
-
+    volumes:
+      - ./mysql-data:/var/lib/mysql/
     environment:
-      MYSQL_USER: sudo
-      MYSQL_PASSWORD: P@ssw0rd
-      MYSQL_DATABASE: budgetAppDB
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
-    #volumes:
-      #- mysql-data:/var/lib/mysql
-
-
+      - MYSQL_USER=sudo
+      # MYSQL_PORT: 3306
+      # MYSQL_ALLOW_EMPTY_PASSWORD: false
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=P@ssw0rd
+      - MYSQL_DATABASE=budgetAppDB
     networks:
       - app-network
 networks:
   app-network:
     driver: bridge
+
+
+
+# volumes:
+#   mysql-data:
+#     driver: local

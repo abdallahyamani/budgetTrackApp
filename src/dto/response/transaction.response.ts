@@ -2,7 +2,7 @@ import { Property } from "@tsed/schema";
 import { TransactionModel } from "src/models/transactionModel";
 
 
-export class TransactionResponseDTO implements Partial < TransactionModel > {
+export class TransactionResponse implements Partial < TransactionModel > {
 
     @Property()
     id: string

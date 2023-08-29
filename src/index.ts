@@ -4,6 +4,7 @@ import {Server} from "./Server";
 
 async function bootstrap() {
   try {
+    // console.log("Hello from index.ts")
     const platform = await PlatformExpress.bootstrap(Server);
     await platform.listen();
 

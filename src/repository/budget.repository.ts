@@ -1,9 +1,9 @@
 import { registerProvider } from "@tsed/common";
-import { MysqlDataSource } from "src/datasources/MysqlDatasource";
-import { BudgetModel } from "src/models/budgetModel";
+import { MysqlDataSource } from "../datasources/MysqlDatasource";
+import { BudgetModel } from "../models/budgetModel";
 
-const BudgetRepository = MysqlDataSource.getRepository(BudgetModel)
-const BUDGET_REPOSITORY = Symbol.for('BudgetRepository')
+export const BudgetRepository = MysqlDataSource.getRepository(BudgetModel)
+export const BUDGET_REPOSITORY = Symbol.for('BudgetRepository')
 
 export type BUDGET_REPOSITORY = typeof BudgetRepository
 registerProvider({

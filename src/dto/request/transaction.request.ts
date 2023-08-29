@@ -1,7 +1,7 @@
 import { Property } from "@tsed/schema";
 
 
-export class TransactionRequestDTO {
+export class TransactionRequest {
 
     @Property()
     budget_id: string

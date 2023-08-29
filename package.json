@@ -7,7 +7,8 @@
     "barrels": "barrelsby --config .barrelsby.json",
     "start": "npm run barrels && tsnd --inspect --exit-child --cls --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "typeorm": "typeorm-ts-node-commonjs",
+    "typeorm-sync": "typeorm schema:sync -d ./src/datasources/MysqlDataSource.ts"
   },
   "dependencies": {
     "@tsed/ajv": "^7.34.6",
@@ -42,8 +43,7 @@
     "dotenv-flow": "^3.2.0",
     "express": "^4.18.2",
     "method-override": "^3.0.0",
-    "mysql": "^2.18.1",
-    "mysql2": "^3.6.0"
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "@tsed/cli-plugin-typeorm": "4.6.4",

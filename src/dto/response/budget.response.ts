@@ -1,7 +1,7 @@
 import { Property } from "@tsed/schema";
 import { BudgetModel } from "src/models/budgetModel";
 
-export class BudgetResponseDTO implements BudgetModel {
+export class BudgetResponse implements BudgetModel {
 
     @Property()
     id: string
