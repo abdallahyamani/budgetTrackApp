@@ -1,6 +1,6 @@
 import { Property } from "@tsed/schema";
 
-export class BudgetRequestDTO {
+export class BudgetRequest {
 
     @Property()
     category: string

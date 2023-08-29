@@ -7,6 +7,7 @@ import "@tsed/swagger";
 import {config} from "./config/index";
 import * as rest from "./controllers/rest/index";
 import * as pages from "./controllers/pages/index";
+import { MysqlDataSource } from "./datasources";
 
 @Configuration({
   ...config,
@@ -20,6 +21,9 @@ import * as pages from "./controllers/pages/index";
     ],
     "/": [
       ...Object.values(pages)
+    ],
+    imports: [
+      MysqlDataSource
     ]
   },
   swagger: [
