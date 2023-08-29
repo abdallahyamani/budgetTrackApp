@@ -4,9 +4,10 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 export class BudgetModel {
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   id: string
 
+  // use enum for category
   @Column()
   category: string
 

@@ -1,5 +1,6 @@
 import { Property } from "@tsed/schema";
 
+// remove DTO from class name
 export class BudgetRequestDTO {
 
     @Property()

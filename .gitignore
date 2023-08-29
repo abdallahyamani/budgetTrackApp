@@ -53,6 +53,8 @@ test/**/*.js.map
 /public
 /dist
 
+mysql-data
+
 #env
 .env.local
 .env.development

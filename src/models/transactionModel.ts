@@ -5,7 +5,7 @@ import { BudgetModel } from './budgetModel';
 
 export class TransactionModel {
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("uuid")
   id: string
 
   @ManyToOne(() => BudgetModel, (budget: BudgetModel) => budget.id)
