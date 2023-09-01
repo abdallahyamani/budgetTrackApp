@@ -5,7 +5,7 @@ import { Property } from "@tsed/schema";
 @Entity()
 export class TransactionModel {
 
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn()
   id: string
 
   @ManyToOne(() => BudgetModel, (budget: BudgetModel) => budget.id)

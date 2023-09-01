@@ -1,5 +1,5 @@
 import { Property } from "@tsed/schema";
-import { BudgetModel } from "src/models/budgetModel";
+import { BudgetModel, Category } from "src/models/budgetModel";
 
 export class BudgetResponse implements BudgetModel {
 
@@ -7,7 +7,7 @@ export class BudgetResponse implements BudgetModel {
     id: string
     
     @Property()
-    category: string
+    category: Category
 
     @Property()
     income: number
