@@ -1,20 +1,22 @@
-import { Controller, Inject } from "@tsed/common";
+import { Controller, Inject, Use, UseBefore } from "@tsed/common";
 import { BodyParams, PathParams } from "@tsed/platform-params";
-import { Delete, Get, Post, Put, Returns } from "@tsed/schema";
+import { Delete, Get, Post, Put, Returns, Security } from "@tsed/schema";
 import { TransactionService } from "src/app-services/transaction.service";
 import { TransactionRequest } from "src/dto/request/transaction.request";
 import { TransactionResponse } from "src/dto/response/transaction.response";
+import { AuthMiddleware } from '../../middlewares/auth.middleware';
 
 @Controller('/transaction')
+// Applying auth middleware to controller
+@UseBefore(AuthMiddleware)
 export class TransactionController {
-    
+
     @Inject(TransactionService)
-    protected service : TransactionService
+    protected service: TransactionService
 
     @Get('/:transactionId')
-    @Returns(200,Array).Of(TransactionRequest)
-
-    async getById(@PathParams('transactionId') transactionId : string) : Promise<TransactionResponse | null> {
+    @Returns(200, Array).Of(TransactionRequest)
+    async getById(@PathParams('transactionId') transactionId: string): Promise<TransactionResponse | null> {
         try {
             return await this.service.getById(transactionId)
         } catch (error) {
@@ -23,16 +25,23 @@ export class TransactionController {
     }
 
     @Delete('/:transactionId')
-    async delete(@PathParams('transactionId') transactionId : string) : Promise<TransactionResponse> {
+    async delete(@PathParams('transactionId') transactionId: string): Promise<any> {
         try {
-            return await this.service.deleteTransaction(transactionId)
+            const deletedTransaction = await this.service.deleteTransaction(transactionId)
+            console.log(deletedTransaction)
+            if (deletedTransaction) {
+                return "Deleted successfully"
+            } else if (!deletedTransaction) {
+                throw new Error("Failed to delete transaction. Transaction doesn't exist")
+            }
+
         } catch (error) {
-            throw new Error(error)           
+            throw new Error(error)
         }
     }
 
     @Post('/')
-    async creatTransaction(@BodyParams() transaction : TransactionRequest) : Promise<TransactionResponse> {
+    async creatTransaction(@BodyParams() transaction: TransactionRequest): Promise<TransactionResponse> {
         try {
             return await this.service.createTransaction(transaction)
         } catch (error) {
@@ -42,24 +51,23 @@ export class TransactionController {
 
     @Put('/:transactionId')
     async updatetransaction(
-        @PathParams('transactionId') transactionId : string,
-        @BodyParams() newtransaction : TransactionRequest ) : Promise<TransactionResponse> {
-            try {
-                let transaction = await this.service.getById(transactionId)
-                if(!transaction) {
-                    throw new Error('transaction not found')
-                }
-
-                transaction.budget_id = newtransaction.budget_id
-                transaction.amount = newtransaction.amount
-                transaction.description = newtransaction.description
-                
-                const finalTransaction = await this.service.updateTransaction(transactionId,transaction)
-                return finalTransaction
-                
-
-            } catch (error) {
-                throw new Error(error)
+        @PathParams('transactionId') transactionId: string,
+        @BodyParams() newtransaction: TransactionRequest): Promise<TransactionResponse> {
+        try {
+            let transaction = await this.service.getById(transactionId)
+            if (!transaction) {
+                throw new Error('transaction not found')
             }
+
+            transaction.budget_id = newtransaction.budget_id
+            transaction.amount = newtransaction.amount
+            transaction.description = newtransaction.description
+
+            const finalTransaction = await this.service.updateTransaction(transactionId, transaction)
+            return finalTransaction
+
+        } catch (error) {
+            throw new Error(error)
         }
+    }
 }

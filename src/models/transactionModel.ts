@@ -1,7 +1,5 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { BudgetModel } from './budgetModel';
-import { Property } from "@tsed/schema";
-
 @Entity()
 export class TransactionModel {
 
@@ -28,4 +26,5 @@ export class TransactionModel {
   @Column()
   @UpdateDateColumn()
   updatedAt: Date
+  
 }

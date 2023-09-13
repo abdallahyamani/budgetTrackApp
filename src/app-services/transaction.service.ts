@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@tsed/common";
 import { TransactionRequest } from "../dto/request/transaction.request";
 import { TransactionResponse } from "../dto/response/transaction.response";
 import { TRANSACTION_REPOSITORY } from "src/repository/transaction.repository";
+import { Exception, NotFound } from "@tsed/exceptions";
 
 @Injectable()
 export class TransactionService {
@@ -26,6 +27,15 @@ export class TransactionService {
     }
 
     async deleteTransaction(id : string) : Promise<any> {
-        return await this.transrepo.delete(id)
+        try {
+            const deleted = await this.transrepo.findOne({ where: { id } })
+            if (!deleted) throw new NotFound("Transaction not found");
+      
+            await this.transrepo.remove(deleted);
+            return true;
+          } catch (error) {
+            if (error instanceof NotFound) throw error;
+            else throw new Exception(500, error.message);
+          }
     }
 }

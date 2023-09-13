@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@tsed/common";
 import { BUDGET_REPOSITORY } from "../repository/budget.repository";
 import { BudgetRequest } from '../dto/request/budget.request';
 import { BudgetResponse } from "../dto/response/budget.response";
+import { Exception, NotFound } from "@tsed/exceptions";
 
 @Injectable()
 export class BudgetService {
@@ -29,6 +30,15 @@ export class BudgetService {
 
 
     async deleteBudget(id: string) : Promise<any> {
-        return await this.budgetrepo.delete(id)
+        try {
+            const deleted = await this.budgetrepo.findOne({ where: { id } })
+            if (!deleted) throw new NotFound("Budget not found");
+      
+            await this.budgetrepo.remove(deleted);
+            return true;
+          } catch (error) {
+            if (error instanceof NotFound) throw error;
+            else throw new Exception(500, error.message);
+          }
     }
 }

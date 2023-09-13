@@ -4,3 +4,4 @@
 
 export * from "./budget.controller";
 export * from "./transaction.controller";
+export * from "./auth/auth.controller";

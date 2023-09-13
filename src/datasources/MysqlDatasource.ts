@@ -1,6 +1,6 @@
-import {registerProvider} from "@tsed/di";
-import {DataSource} from "typeorm";
-import {Logger} from "@tsed/logger";
+import { registerProvider } from "@tsed/di";
+import { DataSource } from "typeorm";
+import { Logger } from "@tsed/logger";
 import { BudgetModel } from "../models/budgetModel";
 import { TransactionModel } from "../models/transactionModel";
 

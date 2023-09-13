@@ -1,10 +1,14 @@
-import { BodyParams, Controller, Err, Inject, PathParams } from "@tsed/common";
-import { Delete, Get, Post, Put, Returns } from '@tsed/schema';
+import { BodyParams, Controller, Err, Inject, PathParams, Use, UseBefore } from "@tsed/common";
+import { NotFound } from "@tsed/exceptions";
+import { Delete, Get, Post, Put, Returns, Security } from '@tsed/schema';
 import { BudgetService } from "src/app-services/budget.service";
 import { BudgetRequest } from "src/dto/request/budget.request";
 import { BudgetResponse } from "src/dto/response/budget.response";
+import { AuthMiddleware } from "../../middlewares/auth.middleware";
 
 @Controller('/budget')
+// Applying auth middleware to controller
+@UseBefore(AuthMiddleware)
 export class BudgetController {
 
     @Inject(BudgetService)
@@ -30,11 +34,13 @@ export class BudgetController {
     }
 
     @Delete('/:budgetId')
-    async deleteBudget(@PathParams('budgetId') budgetId: string): Promise<BudgetResponse> {
+    async deleteBudget(@PathParams('budgetId') budgetId: string): Promise<any> {
         try {
-            return await this.service.deleteBudget(budgetId)
+             await this.service.deleteBudget(budgetId)
+             return "Deleted successfully"
         } catch (err) {
-            throw new Error(err)
+            throw new Error("Resource not found")
+            
         }
     }
 
@@ -45,7 +51,7 @@ export class BudgetController {
         try {
             let budget = await this.service.getbyId(budgetId)
             if (!budget) {
-                throw new Error("Product not found")
+                throw new NotFound("Budget not found");
             }
 
             budget.income = newBudget.income
@@ -59,8 +65,5 @@ export class BudgetController {
         } catch (error) {
             throw new Error(error)
         }
-
     }
-
-
 }
