@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 // Define  enum for the categories Column
 // export enum Category {
@@ -13,7 +13,7 @@ export type Category = "savings" | "food" | "college"
 export class BudgetModel {
 
   @PrimaryGeneratedColumn()
-  id: string
+  budget_id: string
 
   // @Column({
   //   type: "enum",

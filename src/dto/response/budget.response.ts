@@ -4,7 +4,7 @@ import { BudgetModel, Category } from "src/models/budgetModel";
 export class BudgetResponse implements BudgetModel {
 
     @Property()
-    id: string
+    budget_id: string
     
     @Property()
     category: Category
@@ -17,4 +17,8 @@ export class BudgetResponse implements BudgetModel {
     
     @Property()
     endDate: Date    
+
+    // @Property()
+    // user_id: string
+
 }

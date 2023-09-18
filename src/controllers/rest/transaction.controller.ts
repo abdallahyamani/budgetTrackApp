@@ -24,22 +24,6 @@ export class TransactionController {
         }
     }
 
-    @Delete('/:transactionId')
-    async delete(@PathParams('transactionId') transactionId: string): Promise<any> {
-        try {
-            const deletedTransaction = await this.service.deleteTransaction(transactionId)
-            console.log(deletedTransaction)
-            if (deletedTransaction) {
-                return "Deleted successfully"
-            } else if (!deletedTransaction) {
-                throw new Error("Failed to delete transaction. Transaction doesn't exist")
-            }
-
-        } catch (error) {
-            throw new Error(error)
-        }
-    }
-
     @Post('/')
     async creatTransaction(@BodyParams() transaction: TransactionRequest): Promise<TransactionResponse> {
         try {
@@ -48,7 +32,7 @@ export class TransactionController {
             throw new Error(error)
         }
     }
-
+    
     @Put('/:transactionId')
     async updatetransaction(
         @PathParams('transactionId') transactionId: string,
@@ -58,16 +42,21 @@ export class TransactionController {
             if (!transaction) {
                 throw new Error('transaction not found')
             }
-
+            
             transaction.budget_id = newtransaction.budget_id
             transaction.amount = newtransaction.amount
             transaction.description = newtransaction.description
 
             const finalTransaction = await this.service.updateTransaction(transactionId, transaction)
             return finalTransaction
-
+            
         } catch (error) {
             throw new Error(error)
         }
+    }
+    
+    @Delete('/:transactionId')
+    async delete(@PathParams('transactionId') transactionId: string): Promise<any> {
+        return await this.service.deleteTransaction(transactionId)
     }
 }

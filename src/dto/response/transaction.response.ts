@@ -9,13 +9,13 @@ export class TransactionResponse implements Partial < TransactionModel > {
 
     @Property()
     budget_id: string
-
-    @Property()
-    amount: number
-
+    
     @Property()
     description: string
 
+    @Property()
+    amount: number
+   
     @Property()
     createdAt: Date
 

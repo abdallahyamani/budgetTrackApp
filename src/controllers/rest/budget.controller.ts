@@ -33,17 +33,6 @@ export class BudgetController {
         }
     }
 
-    @Delete('/:budgetId')
-    async deleteBudget(@PathParams('budgetId') budgetId: string): Promise<any> {
-        try {
-             await this.service.deleteBudget(budgetId)
-             return "Deleted successfully"
-        } catch (err) {
-            throw new Error("Resource not found")
-            
-        }
-    }
-
     @Put('/:budgetId')
     async update(
         @PathParams('budgetId') budgetId: string,
@@ -65,5 +54,10 @@ export class BudgetController {
         } catch (error) {
             throw new Error(error)
         }
+    }
+
+    @Delete('/:budgetId')
+    async deleteBudget(@PathParams('budgetId') budgetId: string): Promise<any> {
+        return await this.service.deleteBudget(budgetId)
     }
 }

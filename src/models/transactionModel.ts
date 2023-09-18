@@ -6,7 +6,7 @@ export class TransactionModel {
   @PrimaryGeneratedColumn()
   id: string
 
-  @ManyToOne(() => BudgetModel, (budget: BudgetModel) => budget.id)
+  @ManyToOne(() => BudgetModel, (budget: BudgetModel) => budget.budget_id)
   @JoinColumn({ name: "budget_id" })
   budget: BudgetModel
 
@@ -19,11 +19,9 @@ export class TransactionModel {
   @Column()
   description: string
 
-  @Column()
   @CreateDateColumn()
   createdAt: Date
 
-  @Column()
   @UpdateDateColumn()
   updatedAt: Date
   

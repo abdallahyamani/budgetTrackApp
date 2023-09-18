@@ -5,11 +5,11 @@ export class TransactionRequest {
 
     @Property()
     budget_id: string
+    
+    @Property()
+    description: string
 
     @Property()
     amount: number
-
-    @Property()
-    description: string
 
 }

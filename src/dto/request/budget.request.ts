@@ -14,4 +14,8 @@ export class BudgetRequest {
 
     @Property()
     endDate: Date
+
+    // @Property()
+    // user_id: string
+
 }
