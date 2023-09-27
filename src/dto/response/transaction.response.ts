@@ -5,7 +5,7 @@ import { TransactionModel } from "src/models/transactionModel";
 export class TransactionResponse implements Partial < TransactionModel > {
 
     @Property()
-    id: string
+    transaction_id: string
 
     @Property()
     budget_id: string

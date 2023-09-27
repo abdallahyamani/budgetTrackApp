@@ -1,4 +1,4 @@
-import { UserModel } from "src/models/userModel";
+import { UserModel, UserRole } from "../../models/userModel";
 import { Property } from '@tsed/schema';
 
 
@@ -12,14 +12,14 @@ export class UserResponse implements Partial< UserModel > {
   
     @Property()
     password: string
+
+    @Property()
+    role: UserRole
   
     @Property()
     createdAt: Date
   
     @Property()
     updatedAt: Date
-
-    @Property()
-    budget_id: string
 
 }

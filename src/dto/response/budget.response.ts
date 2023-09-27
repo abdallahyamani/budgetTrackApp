@@ -1,7 +1,7 @@
 import { Property } from "@tsed/schema";
 import { BudgetModel, Category } from "src/models/budgetModel";
 
-export class BudgetResponse implements BudgetModel {
+export class BudgetResponse implements Partial < BudgetModel > {
 
     @Property()
     budget_id: string
@@ -18,7 +18,7 @@ export class BudgetResponse implements BudgetModel {
     @Property()
     endDate: Date    
 
-    // @Property()
-    // user_id: string
+    @Property()
+    user_id: string
 
 }

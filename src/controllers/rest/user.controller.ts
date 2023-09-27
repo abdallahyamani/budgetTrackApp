@@ -4,8 +4,9 @@ import { Delete, Get, Post, Put, Returns } from "@tsed/schema";
 import { UserRequest } from "../../dto/request/user.request";
 import { BodyParams, PathParams } from "@tsed/platform-params";
 import { UserResponse } from "../../dto/response/user.response";
-import { UseBefore } from "@tsed/common";
+import { Req, UseBefore } from "@tsed/common";
 import { AuthMiddleware } from "../../middlewares/auth.middleware";
+import { UserRole } from "src/models/userModel";
 
 @Controller('/user')
 
@@ -27,8 +28,12 @@ export class UserController {
     }
 
     @Post('/')
-    async createUser(@BodyParams() user: UserRequest): Promise<UserResponse> {
+    async createUser(@BodyParams() user: UserRequest, @Req() request: Req): Promise<UserResponse> {
+        const userRole = request.$ctx.userRole;
         try {
+            if (userRole !== UserRole.admin) {
+                throw new Error("Access denied");
+            }
             return await this.service.createUser(user)
         } catch (error) {
             throw new Error(error)
@@ -47,7 +52,7 @@ export class UserController {
             }
             user.email = newUser.email
             user.password = newUser.password
-            user.budget_id = newUser.budget_id
+            user.role = newUser.role
 
             const updatedUser = await this.service.updateUser(user_id, newUser)
             return updatedUser
@@ -56,7 +61,7 @@ export class UserController {
             throw new Error(error)
         }
     }
-    
+
     @Delete('/:userId')
     async deleteById(@PathParams('userId') user_id: string): Promise<any> {
         return await this.service.deleteUser(user_id)

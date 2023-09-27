@@ -1,4 +1,5 @@
 import { Property } from "@tsed/schema"
+import { UserRole } from "src/models/userModel"
 
 export class UserRequest {
 
@@ -9,6 +10,6 @@ export class UserRequest {
     password: string
 
     @Property()
-    budget_id: string
+    role: UserRole
 
 }

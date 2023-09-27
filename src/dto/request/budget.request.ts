@@ -10,12 +10,13 @@ export class BudgetRequest {
     income: number
 
     @Property()
+    user_id: string
+
+    @Property()
     startDate: Date
 
     @Property()
     endDate: Date
 
-    // @Property()
-    // user_id: string
 
 }

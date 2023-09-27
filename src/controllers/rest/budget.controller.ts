@@ -1,23 +1,26 @@
-import { BodyParams, Controller, Err, Inject, PathParams, Use, UseBefore } from "@tsed/common";
+import { BodyParams, Controller, Err, Inject, PathParams, Req, UseBefore } from "@tsed/common";
 import { NotFound } from "@tsed/exceptions";
-import { Delete, Get, Post, Put, Returns, Security } from '@tsed/schema';
+import { Delete, Get, Post, Put, Returns } from '@tsed/schema';
 import { BudgetService } from "src/app-services/budget.service";
 import { BudgetRequest } from "src/dto/request/budget.request";
 import { BudgetResponse } from "src/dto/response/budget.response";
 import { AuthMiddleware } from "../../middlewares/auth.middleware";
+import { UserRole } from "src/models/userModel";
 
 @Controller('/budget')
 // Applying auth middleware to controller
-@UseBefore(AuthMiddleware)
+// @UseBefore(AuthMiddleware)
 export class BudgetController {
 
     @Inject(BudgetService)
     protected service: BudgetService
 
+    @UseBefore(AuthMiddleware)
     @Get('/:budgetId')
     @Returns(200, Array).Of(BudgetResponse)
     async getbyId(@PathParams('budgetId') budgetId: string): Promise<BudgetResponse | null> {
         try {
+            // checks corresponding budget matches user accessing it
             return await this.service.getbyId(budgetId)
         } catch (err) {
             throw new Error(err)
@@ -33,6 +36,7 @@ export class BudgetController {
         }
     }
 
+    @UseBefore(AuthMiddleware)
     @Put('/:budgetId')
     async update(
         @PathParams('budgetId') budgetId: string,
@@ -45,6 +49,7 @@ export class BudgetController {
 
             budget.income = newBudget.income
             budget.category = newBudget.category
+            budget.user_id = newBudget.user_id
             budget.startDate = newBudget.startDate
             budget.endDate = newBudget.endDate
 
@@ -56,8 +61,9 @@ export class BudgetController {
         }
     }
 
+    @UseBefore(AuthMiddleware)
     @Delete('/:budgetId')
-    async deleteBudget(@PathParams('budgetId') budgetId: string): Promise<any> {
+    async delete(@PathParams('budgetId') budgetId: string): Promise<any> {
         return await this.service.deleteBudget(budgetId)
     }
 }

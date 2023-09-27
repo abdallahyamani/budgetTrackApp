@@ -1,5 +1,10 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { BudgetModel } from "./budgetModel";
+import { BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { v4 as uuidv4 } from 'uuid'; // Import UUID generation function
+
+export enum UserRole {
+  customer = 'customer',
+  admin = 'admin'
+}
 
 @Entity()
 export class UserModel {
@@ -7,18 +12,24 @@ export class UserModel {
   @PrimaryGeneratedColumn()
   user_id: string
 
+  // Generate a UUID for user_id before inserting into the database
+  // @BeforeInsert()
+  // generateUUID() {
+  //   this.user_id = uuidv4();
+  // }
+
   @Column()
   email: string
 
   @Column()
   password: string
 
-  @OneToMany(() => BudgetModel, (budget:BudgetModel) => budget.budget_id)
-  @JoinColumn({ name: "budget_id"})
-  budget: BudgetModel
-
-  @Column()
-  budget_id: string
+  @Column({
+    type: 'enum',
+    enum: UserRole,
+    // default: UserRole.customer
+  })
+  role: UserRole
 
   @CreateDateColumn()
   createdAt: Date

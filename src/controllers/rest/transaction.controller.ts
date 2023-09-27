@@ -8,7 +8,7 @@ import { AuthMiddleware } from '../../middlewares/auth.middleware';
 
 @Controller('/transaction')
 // Applying auth middleware to controller
-@UseBefore(AuthMiddleware)
+// @UseBefore(AuthMiddleware)
 export class TransactionController {
 
     @Inject(TransactionService)
@@ -16,9 +16,9 @@ export class TransactionController {
 
     @Get('/:transactionId')
     @Returns(200, Array).Of(TransactionRequest)
-    async getById(@PathParams('transactionId') transactionId: string): Promise<TransactionResponse | null> {
+    async getById(@PathParams('transaction_id') transaction_id: string): Promise<TransactionResponse | null> {
         try {
-            return await this.service.getById(transactionId)
+            return await this.service.getById(transaction_id)
         } catch (error) {
             throw new Error(error)
         }
@@ -35,10 +35,10 @@ export class TransactionController {
     
     @Put('/:transactionId')
     async updatetransaction(
-        @PathParams('transactionId') transactionId: string,
+        @PathParams('transaction_id') transaction_id: string,
         @BodyParams() newtransaction: TransactionRequest): Promise<TransactionResponse> {
         try {
-            let transaction = await this.service.getById(transactionId)
+            let transaction = await this.service.getById(transaction_id)
             if (!transaction) {
                 throw new Error('transaction not found')
             }
@@ -47,7 +47,7 @@ export class TransactionController {
             transaction.amount = newtransaction.amount
             transaction.description = newtransaction.description
 
-            const finalTransaction = await this.service.updateTransaction(transactionId, transaction)
+            const finalTransaction = await this.service.updateTransaction(transaction_id, transaction)
             return finalTransaction
             
         } catch (error) {
@@ -56,7 +56,7 @@ export class TransactionController {
     }
     
     @Delete('/:transactionId')
-    async delete(@PathParams('transactionId') transactionId: string): Promise<any> {
-        return await this.service.deleteTransaction(transactionId)
+    async delete(@PathParams('transaction_id') transaction_id: string): Promise<any> {
+        return await this.service.deleteTransaction(transaction_id)
     }
 }
