@@ -15,6 +15,9 @@ export class TransactionResponse implements Partial < TransactionModel > {
 
     @Property()
     amount: number
+
+    @Property()
+    user_id: string
    
     @Property()
     createdAt: Date

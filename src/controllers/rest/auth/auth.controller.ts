@@ -3,6 +3,7 @@ import { BodyParams } from "@tsed/platform-params";
 import { Get, Post, Returns, Tags } from "@tsed/schema";
 import jwt from 'jsonwebtoken';
 import { USER_REPOSITORY } from "src/repository/user.repository";
+import * as bcrypt from "bcrypt"
 
 @Controller("/auth")
 @Tags('Auth')
@@ -28,19 +29,22 @@ export class AuthController {
                 throw new Error("User not found");
             }
 
-            // get user_id for provided mail (will be used for later)
-            const userid_Checked = userChecked.user_id
-            console.log("Id for associated email is: " + userid_Checked)
 
-            // Check if password associates to provided email
-            if (userChecked.password !== password) {
+            // Compare the provided password with the hashed password in the database
+            const passwordMatch = await bcrypt.compare(password, userChecked.password);
+
+            if (!passwordMatch) {
                 throw new Error("Invalid password");
             }
 
-            // If the email & password are valid, create and return a JWT token
-            const token = jwt.sign({ email: email, password: password, userid_Checked }, process.env.API_SECRET_KEY as string, { expiresIn: "1h" })
-            console.log(token)
+            // get user_id for provided mail 
+            const userid_Checked = userChecked.user_id
+            console.log("Id for associated email is: " + userid_Checked)
 
+            // If the email & password are valid, create and return a JWT token
+            // remove pass from payload
+            const token = jwt.sign({ email: email, userid_Checked }, process.env.API_SECRET_KEY as string, { expiresIn: "1h" })
+            console.log(token)
             return token
         } catch (err) {
             throw new Error(err)
@@ -48,25 +52,3 @@ export class AuthController {
 
     }
 }
-
-// }
-// async login(@QueryParams("username") username: string, @QueryParams("password") password: string): Promise<any> {
-//     const admin = {
-//         id: 1,
-//         username: "admin",
-//         password: "admin"
-//     }
-//     try {
-//         if (admin.password !== password) {
-//             return "Invalid password!"
-//         } else if (admin.username !== username) {
-//             return "Invalid username!"
-//         }
-
-//         const token = jwt.sign(admin, process.env.API_SECRET_KEY as string, { expiresIn: "1h" })
-//         console.log(token)
-//         return token
-
-//     } catch (error) {
-//         throw new Error(error)
-//  }

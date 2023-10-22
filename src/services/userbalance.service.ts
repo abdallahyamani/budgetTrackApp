@@ -7,6 +7,8 @@ export class UserBalance {
     @Inject(TRANSACTION_REPOSITORY)
     protected repo: TRANSACTION_REPOSITORY
 
+    // need to use app-services
+
     // get all transaction records having same budget_id & calculate them
     async getSumForBudget(budgetId: string): Promise<number> {
         try {

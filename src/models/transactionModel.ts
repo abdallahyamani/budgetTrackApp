@@ -1,6 +1,6 @@
 import { BeforeInsert, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { BudgetModel } from './budgetModel';
-import { v4 as uuidv4 } from 'uuid'; // Import UUID generation function
+import { UserModel } from "./userModel";
 
 @Entity()
 export class TransactionModel {
@@ -12,6 +12,13 @@ export class TransactionModel {
   @JoinColumn({ name: "budget_id" })
   budget: BudgetModel
 
+  @ManyToOne(() => UserModel, (user: UserModel) => user.user_id)
+  @JoinColumn({ name: "user_id" })
+  user: UserModel
+
+  @Column()
+  user_id: string
+  
   @Column()
   budget_id: string
 

@@ -4,11 +4,8 @@ import { Delete, Get, Post, Put, Returns, Security } from "@tsed/schema";
 import { TransactionService } from "src/app-services/transaction.service";
 import { TransactionRequest } from "src/dto/request/transaction.request";
 import { TransactionResponse } from "src/dto/response/transaction.response";
-import { AuthMiddleware } from '../../middlewares/auth.middleware';
 
 @Controller('/transaction')
-// Applying auth middleware to controller
-// @UseBefore(AuthMiddleware)
 export class TransactionController {
 
     @Inject(TransactionService)
@@ -46,6 +43,7 @@ export class TransactionController {
             transaction.budget_id = newtransaction.budget_id
             transaction.amount = newtransaction.amount
             transaction.description = newtransaction.description
+            transaction.user_id = newtransaction.user_id
 
             const finalTransaction = await this.service.updateTransaction(transaction_id, transaction)
             return finalTransaction

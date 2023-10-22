@@ -5,17 +5,18 @@ import { BudgetService } from "src/app-services/budget.service";
 import { BudgetRequest } from "src/dto/request/budget.request";
 import { BudgetResponse } from "src/dto/response/budget.response";
 import { AuthMiddleware } from "../../middlewares/auth.middleware";
-import { UserRole } from "src/models/userModel";
+import { BudgetAuthMiddleware } from "src/middlewares/budgetAuth.middleware";
 
 @Controller('/budget')
-// Applying auth middleware to controller
-// @UseBefore(AuthMiddleware)
 export class BudgetController {
 
     @Inject(BudgetService)
     protected service: BudgetService
 
+// Applying auth middleware
     @UseBefore(AuthMiddleware)
+    @UseBefore(BudgetAuthMiddleware)
+
     @Get('/:budgetId')
     @Returns(200, Array).Of(BudgetResponse)
     async getbyId(@PathParams('budgetId') budgetId: string): Promise<BudgetResponse | null> {
@@ -36,7 +37,10 @@ export class BudgetController {
         }
     }
 
+// Applying auth middleware
     @UseBefore(AuthMiddleware)
+    @UseBefore(BudgetAuthMiddleware)
+
     @Put('/:budgetId')
     async update(
         @PathParams('budgetId') budgetId: string,
@@ -61,7 +65,10 @@ export class BudgetController {
         }
     }
 
+// Applying auth middleware
     @UseBefore(AuthMiddleware)
+    @UseBefore(BudgetAuthMiddleware)
+
     @Delete('/:budgetId')
     async delete(@PathParams('budgetId') budgetId: string): Promise<any> {
         return await this.service.deleteBudget(budgetId)

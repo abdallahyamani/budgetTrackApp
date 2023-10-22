@@ -10,6 +10,9 @@ export class TransactionRequest {
     description: string
 
     @Property()
+    user_id: string
+
+    @Property()
     amount: number
 
 }
