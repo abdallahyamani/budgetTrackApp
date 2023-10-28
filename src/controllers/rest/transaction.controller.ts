@@ -1,15 +1,20 @@
 import { Controller, Inject, Use, UseBefore } from "@tsed/common";
 import { BodyParams, PathParams } from "@tsed/platform-params";
 import { Delete, Get, Post, Put, Returns, Security } from "@tsed/schema";
-import { TransactionService } from "src/app-services/transaction.service";
-import { TransactionRequest } from "src/dto/request/transaction.request";
-import { TransactionResponse } from "src/dto/response/transaction.response";
+import { TransactionService } from "../../app-services/transaction.service";
+import { TransactionRequest } from "../../dto/request/transaction.request";
+import { TransactionResponse } from "../../dto/response/transaction.response";
+import { TransactionAuthMiddleware } from '../../middlewares/transactionAuth.middleware';
+import { AuthMiddleware } from "../../middlewares/auth.middleware";
 
 @Controller('/transaction')
 export class TransactionController {
 
     @Inject(TransactionService)
     protected service: TransactionService
+    
+    @UseBefore(AuthMiddleware)
+    @UseBefore(TransactionAuthMiddleware)
 
     @Get('/:transactionId')
     @Returns(200, Array).Of(TransactionRequest)

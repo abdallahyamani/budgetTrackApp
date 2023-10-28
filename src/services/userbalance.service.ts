@@ -1,13 +1,10 @@
 import { Inject } from '@tsed/common';
-import { TRANSACTION_REPOSITORY, TransactionRepository } from "src/repository/transaction.repository";
-
+import { TRANSACTION_REPOSITORY } from "../repository/transaction.repository";
 
 export class UserBalance {
 
     @Inject(TRANSACTION_REPOSITORY)
     protected repo: TRANSACTION_REPOSITORY
-
-    // need to use app-services
 
     // get all transaction records having same budget_id & calculate them
     async getSumForBudget(budgetId: string): Promise<number> {

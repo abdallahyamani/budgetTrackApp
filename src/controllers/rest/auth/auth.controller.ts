@@ -37,7 +37,7 @@ export class AuthController {
                 throw new Error("Invalid password");
             }
 
-            // get user_id for provided mail 
+            // get user_id for provided email 
             const userid_Checked = userChecked.user_id
             console.log("Id for associated email is: " + userid_Checked)
 
